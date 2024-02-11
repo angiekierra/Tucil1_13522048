@@ -1,10 +1,57 @@
-#include "struct.h"
-#include "utilities.cpp"
 #include <iostream>
 #include <vector>
-#include <unordered_set>
+#include <string>
+#include <fstream>
+#include <sstream>
 #include <algorithm>
+#include <random>
 
+struct Coordinates
+{
+    int x;
+    int y;
+};
+
+struct TokenItems
+{
+    Coordinates position;
+    string token;
+};
+
+struct Matrix {
+    int rows;
+    int cols;
+    vector<vector<TokenItems>> item;
+};
+
+struct Tokens {
+    int jumlah;
+    vector<string> item;
+};
+
+struct Sequences {      
+    int number;
+    vector<int> reward;
+    vector<vector<TokenItems>> item;
+};
+
+struct Path {
+    vector<TokenItems> item;
+};
+
+struct Inputs {
+    int bufferSize;
+    Tokens tokens;
+    Sequences sequence;
+    Matrix matrix;
+};
+
+struct Result
+{
+    int reward;
+    Path solution;
+    int time;
+};
 
 bool hasSequence(const std::vector<TokenItems>& path, const std::vector<TokenItems>& sequence) {
     if (path.size() >= sequence.size()) {
@@ -132,7 +179,6 @@ void solve(Matrix matrix, Sequences sequences, int bufferSize, int& currentRewar
         //determining starting point in first row
         for (int j = 0 ; j < matrix.cols;j++){
             Path currentSolution;
-            vector<Coordinates> visitedToken;
             TokenItems start = matrix.item[0][j];
             currentSolution = addToken(currentSolution, start);
             visitedToken.clear();
