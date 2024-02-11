@@ -25,9 +25,9 @@ bool hasSequence(const vector<TokenItems>& path, const vector<TokenItems>& seque
     }
 }
 
-bool hasVisited(vector<Coordinates>& visitedPaths, TokenItems& currentPath) {
+bool hasVisited(vector<Coordinates>& visitedTokens, TokenItems& currentPath) {
     Coordinates position = currentPath.position;
-    for (const auto& pos : visitedPaths) {
+    for (const auto& pos : visitedTokens) {
         if (position.x == pos.x && position.y == pos.y) {
             return true;
         }

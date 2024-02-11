@@ -52,12 +52,7 @@ struct Inputs {
     Matrix matrix;
 };
 
-struct Result
-{
-    int reward;
-    Path solution;
-    int time;
-};
+
 
 extern Inputs input;
 extern Path bestSolution;

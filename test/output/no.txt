@@ -1,0 +1,4 @@
+Total hadiah: 0
+Solusi: 
+Koordinat: 
+Waktu eksekusi: 415 ms
