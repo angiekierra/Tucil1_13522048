@@ -11,6 +11,7 @@
 
 using namespace std;
 
+
 struct Coordinates
 {
     int x;
@@ -58,20 +59,20 @@ struct Result
     int time;
 };
 
+extern Inputs input;
+extern Path bestSolution;
+extern int currentReward;
+
 /* BRUTEFORCE ALGORITHM*/
 bool hasSequence(const vector<TokenItems>& path, const vector<TokenItems>& sequence);
 bool hasVisited(vector<Coordinates>& visitedPaths,TokenItems& currentPath);
 void insertCoor(TokenItems& token, int x, int y);
 Path addToken(Path path, TokenItems item);
-void findPaths(Matrix matrix,
-               Sequences sequence,
-               TokenItems token,
+void findPaths(TokenItems token,
                Path currentSolution,
                bool isVertical,
-               std::vector<Coordinates> visitedToken,
-               int remainingMove,
-               int& currentReward,
-               Path& bestSolution);
+               vector<Coordinates> visitedToken,
+               int remainingMove);
 void solve(Matrix matrix, Sequences sequences, int bufferSize, int& currentReward, Path& bestSolution);
 
 /* DIPLAYING STRUCTS */
@@ -80,7 +81,6 @@ void printCoordinates(const vector<Coordinates>& coordinates);
 void printSequence(Sequences sequence);
 void printInputs(Inputs input);
 void printPath(const Path& path);
-void printPathCheckOnly(const Path& path);
 
 /* RANDOMIZE */
 int randomize(int min, int max);
@@ -91,5 +91,6 @@ Inputs getRandomInputs();
 
 /* FILE HANDLING */
 Inputs fileParser();
+void txtWrite(int reward, Path bestSolution, int duration);
 
 #endif

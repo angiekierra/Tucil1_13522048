@@ -2,6 +2,10 @@
 #include <iostream>
 
 
+Inputs input;
+Path bestSolution;
+int currentReward = 0;
+
 /* BRUTEFORCE ALGORITHM*/
 bool hasSequence(const vector<TokenItems>& path, const vector<TokenItems>& sequence) {
     if (path.size() >= sequence.size()) {
@@ -41,22 +45,18 @@ Path addToken(Path path, TokenItems item) {
     return path;
 }
 
-void findPaths(Matrix matrix,
-               Sequences sequence,
-               TokenItems token,
+void findPaths(TokenItems token,
                Path currentSolution,
                bool isVertical,
                vector<Coordinates> visitedToken,
-               int remainingMove,
-               int& currentReward,
-               Path& bestSolution) {
+               int remainingMove) {
 
     if (remainingMove == 0) {
         int reward = 0;
-        for (size_t i = 0; i < sequence.item.size(); ++i) {
-            const auto& seq = sequence.item[i];
+        for (size_t i = 0; i < input.sequence.item.size(); ++i) {
+            const auto& seq = input.sequence.item[i];
             if (hasSequence(currentSolution.item, seq)) {
-                reward += sequence.reward[i];
+                reward += input.sequence.reward[i];
             }
         }
         if (reward > currentReward) {
@@ -66,43 +66,43 @@ void findPaths(Matrix matrix,
     } else {
         if (isVertical) {
             // Moves Downward
-            for (int i = token.position.x + 1; i < matrix.rows; i++) {
-                TokenItems next = matrix.item[i][token.position.y];
+            for (int i = token.position.x + 1; i < input.matrix.rows; i++) {
+                TokenItems next = input.matrix.item[i][token.position.y];
                 if (!hasVisited(visitedToken, next)) {
                     Path path = addToken(currentSolution, next);
                     visitedToken.push_back(next.position);
-                    findPaths(matrix, sequence, next, path, false, visitedToken, remainingMove - 1, currentReward, bestSolution);
+                    findPaths(next, path, false, visitedToken, remainingMove - 1);
                 }
             }
 
             // Moves upwards
             for (int i = token.position.x - 1; i >= 0; i--) {
-                TokenItems next = matrix.item[i][token.position.y];
+                TokenItems next = input.matrix.item[i][token.position.y];
                 if (!hasVisited(visitedToken, next)) {
                     Path path = addToken(currentSolution, next);
                     visitedToken.push_back(next.position);
-                    findPaths(matrix, sequence, next, path, false, visitedToken, remainingMove - 1, currentReward, bestSolution);
+                    findPaths(next, path, false, visitedToken, remainingMove - 1);
                 }
             }
         } else {
 
             // Moves right
-            for (int j = token.position.y + 1; j < matrix.cols; j++) {
-                TokenItems next = matrix.item[token.position.x][j];
+            for (int j = token.position.y + 1; j < input.matrix.cols; j++) {
+                TokenItems next = input.matrix.item[token.position.x][j];
                 if (!hasVisited(visitedToken, next)) {
                     Path path = addToken(currentSolution, next);
                     visitedToken.push_back(next.position);
-                    findPaths(matrix, sequence, next, path, true, visitedToken, remainingMove - 1, currentReward, bestSolution);
+                    findPaths(next, path, true, visitedToken, remainingMove - 1);
                 }
             }
 
             // Moves left
             for (int j = token.position.y - 1; j >= 0; j--) {
-                TokenItems next = matrix.item[token.position.x][j];
+                TokenItems next = input.matrix.item[token.position.x][j];
                 if (!hasVisited(visitedToken, next)) {
                     Path path = addToken(currentSolution, next);
                     visitedToken.push_back(next.position);
-                    findPaths(matrix, sequence, next, path, true, visitedToken, remainingMove - 1, currentReward, bestSolution);
+                    findPaths(next, path, true, visitedToken, remainingMove - 1);
                 }
             }
         }
@@ -119,7 +119,7 @@ void solve(Matrix matrix, Sequences sequences, int bufferSize, int& currentRewar
             currentSolution = addToken(currentSolution, start);
             visitedToken.clear();
             visitedToken.push_back(start.position);
-            findPaths(matrix,sequences,start,currentSolution,true,visitedToken,i,currentReward,bestSolution);
+            findPaths(start,currentSolution,true,visitedToken,i);
         }
     }
 }
@@ -166,13 +166,6 @@ void printPath(const Path& path) {
     }
 }
 
-// HAPUS NANTI
-void printPathCheckOnly(const Path& path) {
-    cout << "Path Contents:" << endl;
-    for (const auto& tokenItem : path.item) {
-        cout << "Token: " << tokenItem.token << ", Position: (" << tokenItem.position.x + 1 << ", " << tokenItem.position.y + 1 << ")" << endl;
-    }
-}
 
 
 /* RANDOMIZE */
@@ -354,3 +347,38 @@ Inputs fileParser() {
 
 
 
+void txtWrite(int reward, Path bestSolution, int duration){
+    string fileName;
+    cout << "Silahkan masukkan nama file dengan .txt, contoh \'hi.txt\': " << endl;
+    cin >> fileName;
+
+    string filepath = "../test/output/" + fileName;
+
+    ofstream outputFile(filepath);
+
+    if (!outputFile.is_open()){
+        cerr << "File error" << filepath << endl;
+    } else {
+        outputFile << "Total hadiah: " << reward << endl;
+        outputFile << "Solusi: ";
+        
+        for (size_t i = 0; i < bestSolution.item.size(); i++){
+            outputFile << bestSolution.item[i].token;
+            outputFile << " ";
+        }
+        outputFile << endl;
+
+        outputFile << "Koordinat: " << endl;
+        for (size_t i = 0; i < bestSolution.item.size(); i++){
+            outputFile << bestSolution.item[i].position.y + 1 << ",";
+            outputFile << bestSolution.item[i].position.x + 1 << endl;
+        }
+        
+        outputFile << "Waktu eksekusi: ";
+        outputFile << duration << " ms" << endl;
+
+        outputFile.close();
+
+        cout << "File written successfully";
+    }
+}

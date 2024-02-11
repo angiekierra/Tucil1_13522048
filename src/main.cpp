@@ -7,7 +7,6 @@ using namespace chrono;
 int main(){
     int type;
     bool txt;
-    Inputs input;
     cout << "Selamat datang di permainan!" << endl;
     cout << "Silahkan pilih mode input: " << endl;
     cout << "1. Menggunakan file txt" << endl;
@@ -29,17 +28,31 @@ int main(){
     cout << "CALCULATING......" << endl;
     
     // ALGORITHM
-    Path bestSolution;
-    int currentReward = 0;
     auto start = high_resolution_clock::now();
     solve(input.matrix,input.sequence,input.bufferSize,currentReward,bestSolution);
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(stop - start);
-
     cout << "Reward:" << currentReward << endl;
     cout << "Solusi: " << endl; 
     printPath(bestSolution);
-    cout << duration.count() << "ms";
+    cout << endl;
+    cout << duration.count() << " ms" << endl << endl;
+
+    if (txt){
+        txtWrite(currentReward,bestSolution,duration.count());
+        cout << "Terima kasih sudah melakukan permainan" << endl;
+    } else {
+        string ans;
+        do {
+            cout << "Apakah ingin menyimpan solusi? (y/n)" << endl;
+            cin >> ans;
+        } while (ans != "y" and ans != "n" and ans != "Y" and ans != "N");
+
+        if (ans == "y" || ans == "Y"){
+            txtWrite(currentReward,bestSolution,duration.count());
+        } 
+        cout << "Terima kasih sudah melakukan permainan" << endl;
+    }
 
 
 }
