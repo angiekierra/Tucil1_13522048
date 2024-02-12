@@ -136,22 +136,24 @@ void printMatrix(Matrix matrix) {
 
 void printSequence(Sequences sequence) {
     for (int i = 0; i < sequence.number; i++) {
-        cout << "Sequence " << i + 1 << " : ";
+        cout << YELLOW << "Sequence " << i + 1 << " : " << RESET;
         for (size_t j = 0; j < sequence.item[i].size(); j++) {
             cout << sequence.item[i][j].token;
             if (j < (sequence.item[i].size() - 1)) {
                 cout << " ";
             }
         }
-        cout << ", Reward: " << sequence.reward[i] << endl;
+        cout << YELLOW << ", Reward: " <<  RESET << sequence.reward[i] << endl;
     }
 }
 
 void printInputs(Inputs input) {
-    cout << "Buffer: " << input.bufferSize << endl;
-    cout << "Matrix-width: " << input.matrix.cols << " Matrix-height: " << input.matrix.rows << endl;
+    cout << BOLD << MAGENTA << "Data yang akan digunakan" << RESET << endl;
+    cout << YELLOW << "Buffer: " << RESET << input.bufferSize << endl;
+    cout << YELLOW << "Matrix-width: " << RESET << input.matrix.cols  << YELLOW << " Matrix-height: " << RESET << input.matrix.rows << endl;
+    cout << YELLOW << "Matrix: " << RESET << endl;
     printMatrix(input.matrix);
-    cout << "Number of sequence: " << input.sequence.number << endl;
+    cout << YELLOW << "Number of sequence: " << RESET << input.sequence.number << endl;
     printSequence(input.sequence);
 }
 
@@ -160,7 +162,7 @@ void printPath(const Path& path) {
         cout << tokenItem.token << " ";
     }
     cout << endl;
-    cout << "Coordinates: " << endl;
+    cout << BOLD << BLUE << "Coordinates: " << RESET << endl;
     for (const auto& token : path.item) {
         cout << "(" << token.position.y + 1 << ", " << token.position.x + 1 << ")" << endl;
     }
@@ -179,13 +181,13 @@ int randomize(int min,int max){
 
 Tokens getTokens() {
     Tokens tokens;
-    cout << "Masukkan jumlah token:" << endl;
+    cout << GREEN << "Masukkan jumlah token: " << RESET;
     cin >> tokens.jumlah;
 
     cin.ignore(numeric_limits<streamsize>::max(), '\n');    
 
     string line;
-    cout << "Masukkan token dalam satu baris:" << endl;
+    cout << GREEN << "Masukkan token dalam satu baris: " << RESET;
 
     getline(cin,line);
     istringstream iss(line);
@@ -201,9 +203,8 @@ Tokens getTokens() {
 Matrix getRandomMatrix(Tokens token) {
     Matrix matrix;
     string line;
-    cout << "Masukkan ukuran matrix (lebar<spasi>tinggi): " << endl;
+    cout << GREEN << "Masukkan ukuran matrix (lebar<spasi>tinggi): " << RESET;
     cin >> matrix.cols >> matrix.rows;
-
     
     // Seed
     shuffle(token.item.begin(), token.item.end(), default_random_engine(time(0)));
@@ -224,10 +225,10 @@ Matrix getRandomMatrix(Tokens token) {
 Sequences getRandomSequence(Tokens token){
     Sequences sequence;
     int maxSeq;
-    cout << "Masukkan jumlah sequence: " << endl;
+    cout << GREEN << "Masukkan jumlah sequence: " << RESET;
     cin >> sequence.number;
-
-    cout << "Masukkan ukuran maksimal sequence: " << endl;
+    
+    cout << GREEN << "Masukkan ukuran maksimal sequence: " << RESET;
     cin >> maxSeq;
 
     // Seed
@@ -236,7 +237,7 @@ Sequences getRandomSequence(Tokens token){
     
     for (int i=0;i<sequence.number;i++){
         vector<TokenItems> list;
-        int length = randomize(1,maxSeq-1);
+        int length = randomize(2,maxSeq-1);
         for (int j=0; j < length ; j++){
             int index = randomize(0,token.jumlah-1);
             TokenItems temp;
@@ -246,7 +247,7 @@ Sequences getRandomSequence(Tokens token){
         sequence.item.push_back(list);
 
         int points = randomize(1,50);
-        sequence.reward.push_back(points); // range masih ngasal
+        sequence.reward.push_back(points); 
     }
 
     return sequence;
@@ -263,7 +264,7 @@ Inputs getRandomInputs(){
     matrix = getRandomMatrix(token);
 
     // Buffer
-    cout << "Masukkan panjang buffer: " << endl;
+    cout << GREEN << "Masukkan panjang buffer: " << RESET;
     cin >> buffer;
 
     sequence = getRandomSequence(token);
@@ -279,8 +280,10 @@ Inputs getRandomInputs(){
 /* FILE HANDLING */
 Inputs fileParser() {
     string fileName;
-    cout << "Silahkan masukkan nama file dengan .txt, contoh \'hi.txt\': " << endl;
+    cout << endl;
+    cout << BLUE << "Silahkan masukkan nama file dengan .txt, contoh \'hi.txt\': " << RESET;
     cin >> fileName;
+    cout << endl;
 
     string filepath = "../test/input/" + fileName;
     
@@ -290,7 +293,7 @@ Inputs fileParser() {
 
     // Error handling
     if (!inputFile.is_open()) {
-        cerr << "File Error" << filepath << endl;
+        cerr  << BOLD << RED << "File Error" << filepath << RESET << endl;
         return input;
     }
 
@@ -349,7 +352,8 @@ Inputs fileParser() {
 
 void txtWrite(int reward, Path bestSolution, int duration){
     string fileName;
-    cout << "Silahkan masukkan nama file dengan .txt, contoh \'hi.txt\': " << endl;
+    cout << endl;
+    cout << BLUE << "Silahkan masukkan nama file dengan .txt, contoh \'hi.txt\': " << RESET;
     cin >> fileName;
 
     string filepath = "../test/output/" + fileName;
@@ -357,8 +361,10 @@ void txtWrite(int reward, Path bestSolution, int duration){
     ofstream outputFile(filepath);
 
     if (!outputFile.is_open()){
-        cerr << "File error" << filepath << endl;
+        cerr << RED <<  "File error" << filepath << endl;
     } else {
+        outputFile << customArt << endl;
+        outputFile << "----- HASIL ALGORITMA ---- " << endl;
         outputFile << "Total hadiah: " << reward << endl;
         outputFile << "Solusi: ";
         
@@ -378,7 +384,18 @@ void txtWrite(int reward, Path bestSolution, int duration){
         outputFile << duration << " ms" << endl;
 
         outputFile.close();
-
-        cout << "File written successfully";
+        cout << endl;    
+        cout  << UNDERLINE << GREEN << "File berhasil ditulis" << RESET << endl;
     }
 }
+
+/* TEXT DECORATION */
+
+const char* customArt = R"(
+   ___      _                                 _      ____   ___ _____ _____ 
+  / __\   _| |__   ___ _ __ _ __  _   _ _ __ | | __ |___ \ / _ \___  |___  |
+ / / | | | | '_ \ / _ \ '__| '_ \| | | | '_ \| |/ /   __) | | | | / /   / / 
+/ /__| |_| | |_) \  __/ |  | |_) | |_| | | | |   <   / __/| |_| |/ /   / /  
+\____/\__, |_.__/ \___|_|  | .__/ \__,_|_| |_|_|\_\ |_____|\___//_/   /_/   
+      |___/                |_|
+)";
