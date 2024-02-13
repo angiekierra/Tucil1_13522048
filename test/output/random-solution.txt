@@ -6,15 +6,28 @@
 \____/\__, |_.__/ \___|_|  | .__/ \__,_|_| |_|_|\_\ |_____|\___//_/   /_/   
       |___/                |_|
 
+
+-- MASUKAN DATA -- 
+Matriks: 
+CC DD CC DD CC EE 
+DD AA EE CC CC BB 
+DD EE CC CC EE EE 
+AA AA CC DD EE AA 
+AA AA CC BB AA EE 
+AA AA BB CC EE CC 
+Sekuens-sekuens: 
+Sequence 1 : DD BB BB AA, Reward: 11
+Sequence 2 : EE BB AA, Reward: 47
+Sequence 3 : AA BB DD, Reward: 27
+
 ----- HASIL ALGORITMA ---- 
-Total hadiah: 50
-Solusi: 7A BD 7A BD 1C BD 55 
+Total hadiah: 74
+Solusi: EE BB AA AA BB DD 
 Koordinat: 
-1,1
-1,4
-3,4
-3,5
-6,5
-6,4
-5,4
-Waktu eksekusi: 632 ms
+6,1
+6,2
+2,2
+2,5
+4,5
+4,4
+Waktu eksekusi: 596 ms

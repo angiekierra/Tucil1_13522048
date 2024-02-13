@@ -4,7 +4,7 @@
 
 Inputs input;
 Path bestSolution;
-int currentReward = 0;
+int currentReward = -9999; // initialisasi reward
 
 /* BRUTEFORCE ALGORITHM*/
 bool hasSequence(const vector<TokenItems>& path, const vector<TokenItems>& sequence) {
@@ -246,7 +246,7 @@ Sequences getRandomSequence(Tokens token){
         }
         sequence.item.push_back(list);
 
-        int points = randomize(1,50);
+        int points = randomize(-10,50);
         sequence.reward.push_back(points); 
     }
 
@@ -363,7 +363,29 @@ void txtWrite(int reward, Path bestSolution, int duration){
     if (!outputFile.is_open()){
         cerr << RED <<  "File error" << filepath << endl;
     } else {
-        outputFile << customArt << endl;
+        outputFile << customArt << endl << endl;
+
+        outputFile << "-- MASUKAN DATA -- " << endl;
+        outputFile << "Matriks: " << endl;
+        for (int i = 0; i < input.matrix.rows; i++) {
+            for (int j = 0; j < input.matrix.cols; j++) {
+                outputFile << input.matrix.item[i][j].token << " ";
+            }
+            outputFile << endl;
+        }
+
+        outputFile << "Sekuens-sekuens: " << endl;
+        for (int i = 0; i < input.sequence.number; i++) {
+            outputFile << "Sequence " << i + 1 << " : ";
+            for (size_t j = 0; j < input.sequence.item[i].size(); j++) {
+                outputFile << input.sequence.item[i][j].token;
+                if (j < (input.sequence.item[i].size() - 1)) {
+                    outputFile << " ";
+                }
+            }
+            outputFile << ", Reward: " << input.sequence.reward[i] << endl;
+        }
+        outputFile << endl;
         outputFile << "----- HASIL ALGORITMA ---- " << endl;
         outputFile << "Total hadiah: " << reward << endl;
         outputFile << "Solusi: ";

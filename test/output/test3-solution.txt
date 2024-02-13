@@ -6,15 +6,26 @@
 \____/\__, |_.__/ \___|_|  | .__/ \__,_|_| |_|_|\_\ |_____|\___//_/   /_/   
       |___/                |_|
 
+
+-- MASUKAN DATA -- 
+Matriks: 
+CD AB EF CD 
+EF EF AB BC 
+EF AB BC CD 
+AB CD CD BC 
+CD BC EF AB 
+Sekuens-sekuens: 
+Sequence 1 : CD BC AB, Reward: 42
+Sequence 2 : EF EF BC, Reward: 5
+Sequence 3 : AB AB, Reward: 17
+
 ----- HASIL ALGORITMA ---- 
-Total hadiah: 50
-Solusi: 7A BD 7A BD 1C BD 55 
+Total hadiah: 59
+Solusi: AB AB CD BC AB 
 Koordinat: 
-1,1
+2,1
+2,3
+4,3
+4,4
 1,4
-3,4
-3,5
-6,5
-6,4
-5,4
-Waktu eksekusi: 603 ms
+Waktu eksekusi: 2 ms

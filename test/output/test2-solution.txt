@@ -1,0 +1,34 @@
+
+   ___      _                                 _      ____   ___ _____ _____ 
+  / __\   _| |__   ___ _ __ _ __  _   _ _ __ | | __ |___ \ / _ \___  |___  |
+ / / | | | | '_ \ / _ \ '__| '_ \| | | | '_ \| |/ /   __) | | | | / /   / / 
+/ /__| |_| | |_) \  __/ |  | |_) | |_| | | | |   <   / __/| |_| |/ /   / /  
+\____/\__, |_.__/ \___|_|  | .__/ \__,_|_| |_|_|\_\ |_____|\___//_/   /_/   
+      |___/                |_|
+
+
+-- MASUKAN DATA -- 
+Matriks: 
+7A 55 E9 E9 1C 55 
+55 7A 1C 7A E9 55 
+55 1C 1C 55 E9 BD 
+BD 1C 7A 1C 55 BD 
+BD 55 BD 7A 1C 1C 
+1C 55 55 7A 55 7A 
+Sekuens-sekuens: 
+Sequence 1 : BD E9 1C, Reward: 15
+Sequence 2 : BD 7A BD, Reward: 20
+Sequence 3 : BD 1C BD 55, Reward: 30
+
+----- HASIL ALGORITMA ---- 
+Total hadiah: 50
+Solusi: 7A BD 7A BD 1C BD 55 
+Koordinat: 
+1,1
+1,4
+3,4
+3,5
+6,5
+6,4
+5,4
+Waktu eksekusi: 569 ms

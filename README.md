@@ -53,7 +53,7 @@ If you the excecutable file does not work as expected, try to recompile the prog
 
 2. Make sure you are in the root directory <br>
 If you are using **Windows** <br>
-`$ ./run.bat`
+`$ ./run.bat` <br>
 If you are using **Linux** <br>
 `$ bash run.sh`
 
