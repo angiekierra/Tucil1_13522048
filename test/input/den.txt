@@ -1,0 +1,13 @@
+3
+3 4
+BB CC CC 
+AA AA CC 
+AA AA DD 
+AA CC CC 
+3
+BB DD
+9
+CC CC
+9
+CC BB
+22

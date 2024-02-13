@@ -63,6 +63,7 @@ int main(){
             cout << BOLD << CYAN << "Terima kasih sudah melakukan permainan" << RESET << endl;
 
     } else {
+        cout << endl;
         cout << BOLD << RED << "Panjang Buffer 0, tidak ada solusi yang memungkinkan" << RESET << endl;
         cout << BOLD << CYAN << "Terima kasih sudah melakukan permainan" << RESET << endl;
     }
