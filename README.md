@@ -19,18 +19,18 @@ Cyberpunk 2077 Breach Protocol is a minigame which uses the Bruteforce Algorithm
 Since this program is build with C++ programming language, you need to install **C++ compilers**
 
 ## **Program's Structure**
-root
-├── bin
-├── doc
-├── src
-│ ├── main.cpp
-│ ├── utilities.cpp
-│ └── utilities.h
-├── test
-│ ├── input
-│ └── output
-├── readme
-├── run.bat
+root<br>
+├── bin<br>
+├── doc<br>
+├── src<br>
+│ ├── main.cpp<br>
+│ ├── utilities.cpp<br>
+│ └── utilities.h<br>
+├── test<br>
+│ ├── input<br>
+│ └── output<br>
+├── readme<br>
+├── run.bat<br>
 └── run.sh
 
 
